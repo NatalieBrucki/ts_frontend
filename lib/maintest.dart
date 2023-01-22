@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:lib/model/user_model.dart';
-//import 'package:lib/services/api_service.dart';
+import 'package:timesheet_frontend/model/timesheet_model.dart';
+import 'package:timesheet_frontend/model/user_model.dart';
+import 'package:timesheet_frontend/model/project_model.dart';
+import 'package:timesheet_frontend/services/api_service.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late List<TimeModel>? _timeModel = [];
+  late List<UserModel>? _userModel = [];
   @override
   void initState() {
     super.initState();
@@ -18,7 +20,7 @@ class _HomeState extends State<Home> {
   }
 
   void _getData() async {
-    _timeModel = (await ApiService().getTimes())!;
+    _userModel = (await ApiService().getUsers())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -28,12 +30,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('REST API Example'),
       ),
-      body: _timeModel == null || _timeModel!.isEmpty
+      body: _userModel == null || _userModel!.isEmpty
           ? const Center(
         child: CircularProgressIndicator(),
       )
           : ListView.builder(
-        itemCount: _timeModel!.length,
+        itemCount: _userModel!.length,
         itemBuilder: (context, index) {
           return Card(
             child: Column(
@@ -41,8 +43,8 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(_timeModel![index].id.toString()),
-                    Text(_timeModel![index].time),
+                    Text(_userModel![index].uid.toString()),
+                    Text(_userModel![index].username),
                   ],
                 ),
                 const SizedBox(
@@ -51,8 +53,7 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(_timeModel![index].timeMinute),
-                    Text(_timeModel![index].timeHour),
+                    Text(_userModel![index].email)
                   ],
                 ),
               ],
