@@ -162,18 +162,22 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               // ignore: prefer_const_constructors
-              child: TextField(
-                obscureText: false,
-                // ignore: prefer_const_constructors
-                decoration: InputDecoration(
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: Colors.orangeAccent, 
+                  primaryColorDark: Colors.deepOrangeAccent,),
+                  // ignore: prefer_const_constructors
+                  child: TextField(
+                  obscureText: false,
+                  // ignore: prefer_const_constructors
+                  decoration: InputDecoration(
                   border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)
-                  ),
+                  borderSide: BorderSide(color: Color.fromARGB(255, 238, 134, 14))),
                   labelText: 'Project',
                   ),
                 ),
-                 
-                ),
+              ),
+             ),
           ],
         ),
       ),
