@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:timesheet_frontend/services/api_service.dart';
+import 'package:timesheet_frontend/model/project_model.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -17,6 +19,18 @@ class _homePageState extends State<homePage> {
   bool showDate = false;
   bool showTime = false;
   bool showDateTime = true;
+
+  var txtProjectController = TextEditingController();
+  int txtProjectId = -1;
+
+  ApiService apiService = new ApiService();
+  late Future<List<ProjectModel>?> projects;
+
+  @override
+  void initState() {
+    super.initState();
+    projects = apiService.getProjects();
+  }
 
 //    // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
@@ -117,10 +131,17 @@ class _homePageState extends State<homePage> {
     return format.format(dt);
   }
 
+  void tapProjectList({required int prj_id, required String prj_name}) {
+    setState(() {
+      txtProjectController.text = prj_name;
+      txtProjectId = prj_id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style = 
-    ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 251, 157, 64));
+    final ButtonStyle style = ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 251, 157, 64));
     return Scaffold(
       body: Center(
         child: Column(
@@ -164,20 +185,63 @@ class _homePageState extends State<homePage> {
               // ignore: prefer_const_constructors
               child: Theme(
                 data: ThemeData(
-                  primaryColor: Colors.orangeAccent, 
-                  primaryColorDark: Colors.deepOrangeAccent,),
-                  // ignore: prefer_const_constructors
-                  child: TextField(
+                  primaryColor: Colors.orangeAccent,
+                  primaryColorDark: Colors.deepOrangeAccent,
+                ),
+                // ignore: prefer_const_constructors
+                child: TextField(
                   obscureText: false,
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color.fromARGB(255, 238, 134, 14))),
-                  labelText: 'Project',
+                    border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    labelText: 'Project',
                   ),
+
+                  controller: txtProjectController,
+                  onChanged: (value) {
+                    setState(() {
+                      txtProjectId = -1;
+                    });
+                  },
                 ),
               ),
-             ),
+            ),
+            Expanded(
+              child: FutureBuilder<List<ProjectModel>?>(
+                future: projects,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ProjectModel>?> snapshot) {
+                  if (snapshot.hasData) {
+                    List<ProjectModel> prj = snapshot.data!.toList();
+                    //return Center(child: Text("Projects found"));
+                    return ListView.separated(
+                      padding: const EdgeInsets.all(10),
+                      itemCount: prj.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          child: Container(
+                              height: 35,
+                              color: Colors.amber,
+                              child: Center(
+                                  child: Text(
+                                      "${prj[index].pid}: ${prj[index].name}"))),
+                          onTap: () {
+                            tapProjectList(
+                                prj_id: prj[index].pid,
+                                prj_name: prj[index].name);
+                          },
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                    );
+                  } else {
+                    return Center(child: Text("No Projects found"));
+                  }
+                },
+              ),
+            )
           ],
         ),
       ),

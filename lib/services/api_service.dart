@@ -31,7 +31,8 @@ class ApiService {
 
   Future<List<ProjectModel>?> getProjects() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.getProjectsEndpoint);
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getProjectsEndpoint);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<ProjectModel> _model = projectModelFromJson(response.body);
@@ -44,7 +45,8 @@ class ApiService {
 
   Future<List<TimesheetModel>?> getTimesheets() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.getTimesheetsEndpoint);
+      var url =
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getTimesheetsEndpoint);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<TimesheetModel> _model = timesheetModelFromJson(response.body);
