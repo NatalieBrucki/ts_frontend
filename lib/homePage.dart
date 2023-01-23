@@ -10,14 +10,13 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime dateTimeStart = DateTime.now();
   DateTime dateTimeEnd = DateTime.now();
   bool showDate = false;
   bool showTime = false;
-  bool showDateTime = false;
+  bool showDateTime = true;
 
 //    // Select for Date
   Future<DateTime> _selectDate(BuildContext context) async {
@@ -25,7 +24,7 @@ class _homePageState extends State<homePage> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2100),
     );
     if (selected != null && selected != selectedDate) {
       setState(() {
@@ -52,11 +51,11 @@ class _homePageState extends State<homePage> {
 
   Future _selectDateTimeStart(BuildContext context) async {
     final date = await _selectDate(context);
-      if (date == null) return;
+    if (date == null) return;
 
     final time = await _selectTime(context);
 
-      if (time == null) return;
+    if (time == null) return;
     setState(() {
       dateTimeStart = DateTime(
         date.year,
@@ -70,11 +69,11 @@ class _homePageState extends State<homePage> {
 
   Future _selectDateTimeEnd(BuildContext context) async {
     final date = await _selectDate(context);
-      if (date == null) return;
+    if (date == null) return;
 
     final time = await _selectTime(context);
 
-      if (time == null) return;
+    if (time == null) return;
     setState(() {
       dateTimeEnd = DateTime(
         date.year,
@@ -86,7 +85,7 @@ class _homePageState extends State<homePage> {
     });
   }
 
- String getDate() {
+  String getDate() {
     // ignore: unnecessary_null_comparison
     if (selectedDate == null) {
       return 'select date';
@@ -95,13 +94,12 @@ class _homePageState extends State<homePage> {
     }
   }
 
-String getDateTime(bool start) {
+  String getDateTime(bool start) {
     // ignore: unnecessary_null_comparison
     var dateTime;
-    if(start) {
+    if (start) {
       dateTime = dateTimeStart;
-    }
-    else {
+    } else {
       dateTime = dateTimeEnd;
     }
     if (dateTime == null) {
@@ -110,6 +108,7 @@ String getDateTime(bool start) {
       return DateFormat('yyyy-MM-dd HH:mm a').format(dateTime);
     }
   }
+
   String getTime(TimeOfDay tod) {
     final now = DateTime.now();
 
@@ -118,19 +117,21 @@ String getDateTime(bool start) {
     return format.format(dt);
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle style = 
+    ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 251, 157, 64));
     return Scaffold(
-            body: Center(
+      body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [            
+          children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               child: ElevatedButton(
+                style: style,
                 onPressed: () {
                   _selectDateTimeStart(context);
                   showDateTime = true;
@@ -140,11 +141,12 @@ String getDateTime(bool start) {
             ),
             showDateTime
                 ? Center(child: Text(getDateTime(true)))
-                : const SizedBox(),            
+                : const SizedBox(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               child: ElevatedButton(
+                style: style,
                 onPressed: () {
                   _selectDateTimeEnd(context);
                   showDateTime = true;
@@ -155,6 +157,23 @@ String getDateTime(bool start) {
             showDateTime
                 ? Center(child: Text(getDateTime(false)))
                 : const SizedBox(),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              width: double.infinity,
+              // ignore: prefer_const_constructors
+              child: TextField(
+                obscureText: false,
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)
+                  ),
+                  labelText: 'Project',
+                  ),
+                ),
+                 
+                ),
           ],
         ),
       ),
