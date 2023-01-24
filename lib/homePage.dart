@@ -141,7 +141,7 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(
-        );
+        backgroundColor: Color.fromARGB(255, 251, 157, 64));
     return Scaffold(
       body: Center(
         child: Column(
@@ -183,21 +183,21 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               // ignore: prefer_const_constructors
-              //child: Theme(
-                //data: ThemeData(
-                  //primaryColor: Colors.orangeAccent,
-                  //primaryColorDark: Colors.deepOrangeAccent,
-                //),
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: Colors.orangeAccent,
+                  primaryColorDark: Colors.deepOrangeAccent,
+                ),
                 // ignore: prefer_const_constructors
                 child: TextField(
                   obscureText: false,
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
-
+                    border: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black)),
                     labelText: 'Project',
                     //focusedBorder: const OutlineInputBorder(
-                      //  borderSide: BorderSide(color: Colors.deepOrangeAccent)),
+                    //  borderSide: BorderSide(color: Colors.deepOrangeAccent)),
                   ),
 
                   controller: txtProjectController,
@@ -208,7 +208,7 @@ class _homePageState extends State<homePage> {
                   },
                 ),
               ),
-         //   ),
+            ),
             Expanded(
               child: FutureBuilder<List<ProjectModel>?>(
                 future: projects,
