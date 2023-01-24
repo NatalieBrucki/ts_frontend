@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet_frontend/homePage.dart';
 import 'package:timesheet_frontend/timesheetPage.dart';
+import 'package:timesheet_frontend/globals/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,18 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Timesheet',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: tsCustomTheme,
+      //our own timesheet Theme (located in 'lib/globals/theme')
       home: const MyHomePage(title: 'Timesheet'),
     );
   }
@@ -97,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+//        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
