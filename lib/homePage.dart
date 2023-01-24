@@ -209,10 +209,10 @@ class _homePageState extends State<homePage> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              width: double.infinity,
-              height: 200,
+            Expanded(
+              //padding: const EdgeInsets.symmetric(horizontal: 15),
+              //width: double.infinity,
+              //height: 200,
               child: FutureBuilder<List<ProjectModel>?>(
                 future: projects,
                 builder: (BuildContext context,
@@ -244,18 +244,25 @@ class _homePageState extends State<homePage> {
                   } else {
                     return Center(child: Text("No Projects found"));
                   }
-                  
                 },
               ),
             ),
-              Container(
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               child: ElevatedButton(
                 style: style,
-                onPressed: () { //function for save 
-                  _selectDateTimeEnd(context);
-                  showDateTime = true;
+                onPressed: () {
+                  if (txtProjectId == -1) {
+                    // New Project must be added
+                    Future<ProjectModel> prj =
+                        apiService.addProject(txtProjectController.text);
+                    prj.then((value) {
+                      txtProjectController.text = value.name;
+                    });
+                  } else {
+                    // Use existing project
+                  }
                 },
                 child: const Text('Save'),
               ),

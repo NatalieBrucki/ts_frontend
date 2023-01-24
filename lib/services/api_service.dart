@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
@@ -54,6 +55,20 @@ class ApiService {
       }
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  Future<ProjectModel> addProject(String projectname) async {
+    http.Response res = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.addProjectEndpoint),
+        headers: <String, String>{'Content-Type': 'text/plain'},
+        body: projectname);
+
+    if (res.statusCode == 201) {
+      List<ProjectModel> projects = projectModelFromJson("[" + res.body + "]");
+      return projects[0];
+    } else {
+      throw "Add Project faild";
     }
   }
 }
