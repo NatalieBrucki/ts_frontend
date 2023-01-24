@@ -182,33 +182,33 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               // ignore: prefer_const_constructors
-              // child: 
+              // child:
               // Theme(
               //   data: ThemeData(
               //     primaryColor: Colors.orangeAccent,
               //     primaryColorDark: Colors.deepOrangeAccent,
               //   ),
+              // ignore: prefer_const_constructors
+              child: TextField(
+                obscureText: false,
                 // ignore: prefer_const_constructors
-                child: TextField(
-                  obscureText: false,
-                  // ignore: prefer_const_constructors
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    labelText: 'Project',
-                    //focusedBorder: const OutlineInputBorder(
-                    //  borderSide: BorderSide(color: Colors.deepOrangeAccent)),
-                  ),
-
-                  controller: txtProjectController,
-                  onChanged: (value) {
-                    setState(() {
-                      txtProjectId = -1;
-                    });
-                  },
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  labelText: 'Project',
+                  //focusedBorder: const OutlineInputBorder(
+                  //  borderSide: BorderSide(color: Colors.deepOrangeAccent)),
                 ),
+
+                controller: txtProjectController,
+                onChanged: (value) {
+                  setState(() {
+                    txtProjectId = -1;
+                  });
+                },
               ),
-           // ),
+            ),
+            // ),
             Expanded(
               //padding: const EdgeInsets.symmetric(horizontal: 15),
               //width: double.infinity,
@@ -259,9 +259,36 @@ class _homePageState extends State<homePage> {
                         apiService.addProject(txtProjectController.text);
                     prj.then((value) {
                       txtProjectController.text = value.name;
+                      // Use existing project
+                      String weekdays =
+                          DateFormat('dd.MM.yyyy').format(dateTimeStart);
+                      String starttime =
+                          DateFormat('HH:mm').format(dateTimeStart);
+                      String endtime = DateFormat('HH:mm').format(dateTimeEnd);
+                      String workinghours =
+                          (dateTimeEnd.difference(dateTimeStart).inSeconds /
+                                  60.0 /
+                                  60.0)
+                              .toString();
+
+                      apiService.addTimesheet(weekdays, starttime, endtime,
+                          workinghours, value.pid, 1);
                     });
                   } else {
                     // Use existing project
+                    String weekdays =
+                        DateFormat('dd.MM.yyyy').format(dateTimeStart);
+                    String starttime =
+                        DateFormat('HH:mm').format(dateTimeStart);
+                    String endtime = DateFormat('HH:mm').format(dateTimeEnd);
+                    String workinghours =
+                        (dateTimeEnd.difference(dateTimeStart).inSeconds /
+                                60.0 /
+                                60.0)
+                            .toString();
+
+                    apiService.addTimesheet(weekdays, starttime, endtime,
+                        workinghours, txtProjectId, 1);
                   }
                 },
                 child: const Text('Save'),

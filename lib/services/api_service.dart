@@ -71,4 +71,26 @@ class ApiService {
       throw "Add Project faild";
     }
   }
+
+  bool addTimesheet(String weekday, String starttime, String endtime,
+      String workinghours, int pid, int uid) {
+    String bodytxt = jsonEncode(<String, String>{
+      "weekday": weekday,
+      "starttime": starttime,
+      "endtime": endtime,
+      "workinghours": workinghours,
+      "pid": pid.toString(),
+      "uid": uid.toString(),
+    });
+
+    http.post(
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.addTimesheetEndpoint),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: bodytxt,
+    );
+
+    return true;
+  }
 }
