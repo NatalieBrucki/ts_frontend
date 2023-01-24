@@ -209,7 +209,10 @@ class _homePageState extends State<homePage> {
                 ),
               ),
             ),
-            Expanded(
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              width: double.infinity,
+              height: 200,
               child: FutureBuilder<List<ProjectModel>?>(
                 future: projects,
                 builder: (BuildContext context,
@@ -241,9 +244,22 @@ class _homePageState extends State<homePage> {
                   } else {
                     return Center(child: Text("No Projects found"));
                   }
+                  
                 },
               ),
-            )
+            ),
+              Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              width: double.infinity,
+              child: ElevatedButton(
+                style: style,
+                onPressed: () { //function for save 
+                  _selectDateTimeEnd(context);
+                  showDateTime = true;
+                },
+                child: const Text('Save'),
+              ),
+            ),
           ],
         ),
       ),
