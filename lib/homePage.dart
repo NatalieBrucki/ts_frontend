@@ -140,8 +140,7 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style = ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 251, 157, 64));
+    final ButtonStyle style = ElevatedButton.styleFrom();
     return Scaffold(
       body: Center(
         child: Column(
@@ -183,11 +182,12 @@ class _homePageState extends State<homePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               // ignore: prefer_const_constructors
-              child: Theme(
-                data: ThemeData(
-                  primaryColor: Colors.orangeAccent,
-                  primaryColorDark: Colors.deepOrangeAccent,
-                ),
+              // child: 
+              // Theme(
+              //   data: ThemeData(
+              //     primaryColor: Colors.orangeAccent,
+              //     primaryColorDark: Colors.deepOrangeAccent,
+              //   ),
                 // ignore: prefer_const_constructors
                 child: TextField(
                   obscureText: false,
@@ -208,7 +208,7 @@ class _homePageState extends State<homePage> {
                   },
                 ),
               ),
-            ),
+           // ),
             Expanded(
               //padding: const EdgeInsets.symmetric(horizontal: 15),
               //width: double.infinity,
