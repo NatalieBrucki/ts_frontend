@@ -8,14 +8,6 @@ import 'package:timesheet_frontend/model/project_model.dart';
 import 'package:timesheet_frontend/services/api_service.dart';
 import '../constants.dart';
 
-/*
-  TODO
-  -  addUser
-  - getUserByUsername
-  - addProject
-  - getTimesheetsByUsername
-*/
-
 class ApiService {
   Future<List<UserModel>?> getUsers() async {
     try {

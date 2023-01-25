@@ -37,21 +37,25 @@ class _timesheetPageState extends State<timesheetPage> {
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // TODO Date in text
-                          Text(_timesheetModel![index].workinghours.toString()),
-                          Text(_timesheetModel![index].project.name.toString()),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 1,
+                            child: Text(_timesheetModel![index].weekday.toString()),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(_timesheetModel![index].workinghours.roundToDouble().toString()),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(_timesheetModel![index].project.name.toString()),
+                          ),
                         ],
                       ),
                       const SizedBox(
                         height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_timesheetModel![index].user.email.toString())
-                        ],
                       ),
                     ],
                   ),

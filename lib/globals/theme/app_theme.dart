@@ -8,9 +8,9 @@ final ThemeData tsCustomTheme = _tsCustomTheme();
 
     return base.copyWith(
       colorScheme: base.colorScheme.copyWith(
-        primary: const Color.fromARGB(255, 255, 153, 51),
+        primary: const Color.fromARGB(255, 39, 115, 138),
         onPrimary: Colors.white,
-        secondary: const Color.fromARGB(255, 251, 157, 64),
+        secondary: const Color.fromARGB(255, 39, 137, 134),
         onSecondary: Colors.white,
         error: Colors.red,
         background: const Color.fromARGB(255, 228, 243, 228),
@@ -27,7 +27,7 @@ final ThemeData tsCustomTheme = _tsCustomTheme();
           border: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black)),
           focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.deepOrangeAccent))),
+          borderSide: BorderSide(color: Colors.cyanAccent))),
     );
   }
 
@@ -101,7 +101,7 @@ final ThemeData tsCustomTheme = _tsCustomTheme();
       ElevatedButtonThemeData(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
-            const Color.fromARGB(255, 251, 157, 64),
+            const Color.fromARGB(255, 39, 115, 138),
           ),
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),

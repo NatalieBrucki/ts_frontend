@@ -1,7 +1,7 @@
 class ApiConstants {
   static String baseUrl =
-      //"http://192.168.0.139:8080"; // change to the IP the backend is running on
-      "http://172.16.1.55:8080"; // change to the IP the backend is running on
+      "http://192.168.0.139:8080"; // change to the IP the backend is running on
+      //"http://172.16.1.55:8080"; // change to the IP the backend is running on
   static String addUserEndpoint = "/addUser";
   static String getUsersEndpoint = "/getUsers";
   static String getUserByUsernameEndpoint = "/getUserbyUsername/{name}";

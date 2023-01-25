@@ -227,7 +227,7 @@ class _homePageState extends State<homePage> {
                         return InkWell(
                           child: Container(
                               height: 35,
-                              color: Colors.amber,
+                              color: Colors.grey,
                               child: Center(
                                   child: Text(
                                       "${prj[index].pid}: ${prj[index].name}"))),
