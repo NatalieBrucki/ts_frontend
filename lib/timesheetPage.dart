@@ -37,11 +37,27 @@ class _timesheetPageState extends State<timesheetPage> {
                   child: Column(
                     children: [
                       Row(
+                        children: const <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Text("Weekday", textScaleFactor: 0.7),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text("Workinghours", textScaleFactor: 0.7),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text("Project", textScaleFactor: 0.7),
+                        ),
+                      ],
+                      ),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Expanded(
-                              flex: 1,
+                            flex: 1,
                             child: Text(_timesheetModel![index].weekday.toString()),
                           ),
                           Expanded(
