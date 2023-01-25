@@ -163,6 +163,7 @@ class _homePageState extends State<homePage> {
                 ? Center(child: Text(getDateTime(true)))
                 : const SizedBox(),
             Container(
+              margin: const EdgeInsets.only(top: 10),
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               child: ElevatedButton(
@@ -177,8 +178,10 @@ class _homePageState extends State<homePage> {
             showDateTime
                 ? Center(child: Text(getDateTime(false)))
                 : const SizedBox(),
+
+
             Container(
-              margin: const EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 40),
               padding: const EdgeInsets.symmetric(horizontal: 15),
               width: double.infinity,
               // ignore: prefer_const_constructors
@@ -193,9 +196,9 @@ class _homePageState extends State<homePage> {
                 obscureText: false,
                 // ignore: prefer_const_constructors
                 decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  labelText: 'Project',
+                  //border: const OutlineInputBorder(
+                     // borderSide: BorderSide(color: Colors.black)),
+                  labelText: 'Enter Project or select one bellow',
                   //focusedBorder: const OutlineInputBorder(
                   //  borderSide: BorderSide(color: Colors.deepOrangeAccent)),
                 ),
@@ -209,46 +212,54 @@ class _homePageState extends State<homePage> {
               ),
             ),
             // ),
-            Expanded(
-              //padding: const EdgeInsets.symmetric(horizontal: 15),
-              //width: double.infinity,
-              //height: 200,
-              child: FutureBuilder<List<ProjectModel>?>(
-                future: projects,
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<ProjectModel>?> snapshot) {
-                  if (snapshot.hasData) {
-                    List<ProjectModel> prj = snapshot.data!.toList();
-                    //return Center(child: Text("Projects found"));
-                    return ListView.separated(
-                      padding: const EdgeInsets.all(10),
-                      itemCount: prj.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          child: Container(
-                              height: 35,
-                              color: Colors.grey,
-                              child: Center(
-                                  child: Text(
-                                      "${prj[index].pid}: ${prj[index].name}"))),
-                          onTap: () {
-                            tapProjectList(
-                                prj_id: prj[index].pid,
-                                prj_name: prj[index].name);
-                          },
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(),
-                    );
-                  } else {
-                    return Center(child: Text("No Projects found"));
-                  }
-                },
+
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              height: 70,
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Expanded(
+                child: FutureBuilder<List<ProjectModel>?>(
+                  future: projects,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ProjectModel>?> snapshot) {
+                    if (snapshot.hasData) {
+                      List<ProjectModel> prj = snapshot.data!.toList();
+                      ProjectModel selectedProject = prj.first;
+
+                      void tapProjectList(ProjectModel? project) {
+                        if (project != null) {
+                          setState(() {
+                            selectedProject = project;
+                            txtProjectController.text = project.name;
+                            txtProjectId = project.pid;
+                          });
+                        }
+                      }
+
+                      return DropdownButton<ProjectModel>(
+                        value: selectedProject,
+                        isExpanded: true,
+                        items: prj.map((project) {
+                          return DropdownMenuItem<ProjectModel>(
+                            value: project,
+                            child: Text("${project.pid}: ${project.name}"),
+                          );
+                        }).toList(),
+                        onChanged: (ProjectModel? selected) {
+                          tapProjectList(selected);
+                        },
+                      );
+                    } else {
+                      return Center(child: Text("No Projects found"));
+                    }
+                  },
+                ),
               ),
             ),
+
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
+              margin: const EdgeInsets.only(top: 40),
               width: double.infinity,
               child: ElevatedButton(
                 style: style,
